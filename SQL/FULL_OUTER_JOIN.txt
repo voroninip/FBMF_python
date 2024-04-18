@@ -1,0 +1,26 @@
+CREATE TABLE company(
+    id INT PRIMARY KEY NOT NULL,
+    name TEXT NOT NULL,
+    age INT NOT NULL,
+    address TEXT,
+    salary REAL DEFAULT 30000 CHECK(salary >= 0)
+);
+
+CREATE TABLE department(
+    id INT PRIMARY KEY NOT NULL,
+    dept TEXT NOT NULL,
+    emp_id INT NOT NULL,
+    FOREIGN KEY (emp_id) REFERENCES company (id)
+);
+
+SELECT name, dept
+FROM company
+LEFT JOIN department
+    ON company.id = department.emp_id
+
+UNION
+
+SELECT name, dept
+FROM department
+LEFT JOIN company
+    ON department.emp_id = company.id;
